@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import *
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired, ChatWriteForbidden
 from pymongo import MongoClient
 from pyrogram.enums import ChatAction
 import requests
