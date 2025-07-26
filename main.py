@@ -16,9 +16,9 @@ API_HASH = os.environ.get("API_HASH", None)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None) 
 MONGO_URL = os.environ.get("MONGO_URL", None)
 BOT_USERNAME = os.environ.get("BOT_USERNAME","") 
-UPDATE_CHNL = os.environ.get("UPDATE_CHNL","PURVI_SUPPORT")
-OWNER_USERNAME = os.environ.get("OWNER_USERNAME","ll_THUNDER_lll")
-SUPPORT_GRP = os.environ.get("SUPPORT_GRP","CRAZY_OP_02")
+UPDATE_CHNL = os.environ.get("UPDATE_CHNL","PythonBotz")
+OWNER_USERNAME = os.environ.get("OWNER_USERNAME","metaui")
+SUPPORT_GRP = os.environ.get("SUPPORT_GRP","offchats")
 BOT_NAME = os.environ.get("BOT_NAME","RADHIKA")
 START_IMG = os.environ.get("START_IMG","")
 
@@ -46,7 +46,7 @@ SOURCE_TEXT = f"""
 ᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴛʜᴇ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ**
 """
 SOURCE_BUTTONS = InlineKeyboardMarkup([[InlineKeyboardButton('sᴏᴜʀᴄᴇ', callback_data='hurr')], [InlineKeyboardButton(" ꜱᴜᴘᴘᴏʀᴛ ", url=f"https://t.me/{SUPPORT_GRP}"), InlineKeyboardButton(text="ʙᴀᴄᴋ ", callback_data="HELP_BACK")]])
-SOURCE = 'https://github.com/TEAM-ISTKHAR/ISTKHAR_CHATBOT'
+SOURCE = 'https://t.me/+VH_YJbs8zHpiYWFl'
 x=["❤️","🎉","✨","🪸","🎉","🎈","🎯"]
 g=choice(x)
 async def is_admins(chat_id: int):
@@ -90,7 +90,7 @@ PNG_BTN = [
      ],
 ]
 
-HELP_READ = "**ᴜsᴀɢᴇ ☟︎︎︎**\n**➻ ᴜsᴇ** `/chatbot on` **ᴛᴏ ᴇɴᴀʙʟᴇ ᴄʜᴀᴛʙᴏᴛ.**\n**➻ ᴜsᴇ** `/chatbot off` **ᴛᴏ ᴅɪsᴀʙʟᴇ ᴛʜᴇ ᴄʜᴀᴛʙᴏᴛ.**\n**๏ ɴᴏᴛᴇ ➻ ʙᴏᴛʜ ᴛʜᴇ ᴀʙᴏᴠᴇ ᴄᴏᴍᴍᴀɴᴅs ғᴏʀ ᴄʜᴀᴛ-ʙᴏᴛ ᴏɴ/ᴏғғ ᴡᴏʀᴋ ɪɴ ɢʀᴏᴜᴘ ᴏɴʟʏ!!**\n\n**➻ ᴜsᴇ** `/ping` **ᴛᴏ ᴄʜᴇᴄᴋ ᴛʜᴇ ᴘɪɴɢ ᴏғ ᴛʜᴇ ʙᴏᴛ.**\n||©️ @ll_THUNDER_lll||"
+HELP_READ = "**ᴜsᴀɢᴇ ☟︎︎︎**\n**➻ ᴜsᴇ** `/chatbot on` **ᴛᴏ ᴇɴᴀʙʟᴇ ᴄʜᴀᴛʙᴏᴛ.**\n**➻ ᴜsᴇ** `/chatbot off` **ᴛᴏ ᴅɪsᴀʙʟᴇ ᴛʜᴇ ᴄʜᴀᴛʙᴏᴛ.**\n**๏ ɴᴏᴛᴇ ➻ ʙᴏᴛʜ ᴛʜᴇ ᴀʙᴏᴠᴇ ᴄᴏᴍᴍᴀɴᴅs ғᴏʀ ᴄʜᴀᴛ-ʙᴏᴛ ᴏɴ/ᴏғғ ᴡᴏʀᴋ ɪɴ ɢʀᴏᴜᴘ ᴏɴʟʏ!!**\n\n**➻ ᴜsᴇ** `/ping` **ᴛᴏ ᴄʜᴇᴄᴋ ᴛʜᴇ ᴘɪɴɢ ᴏғ ᴛʜᴇ ʙᴏᴛ.**\n||©️ @metaui||"
 HELP_BACK = [
 
     [
