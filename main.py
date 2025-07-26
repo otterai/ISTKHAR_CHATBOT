@@ -19,7 +19,7 @@ BOT_USERNAME = os.environ.get("BOT_USERNAME","")
 UPDATE_CHNL = os.environ.get("UPDATE_CHNL","PythonBotz")
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME","metaui")
 SUPPORT_GRP = os.environ.get("SUPPORT_GRP","offchats")
-BOT_NAME = os.environ.get("BOT_NAME","RADHIKA")
+BOT_NAME = os.environ.get("BOT_NAME","Sana")
 START_IMG = os.environ.get("START_IMG","")
 
 STKR = os.environ.get("STKR","")  
