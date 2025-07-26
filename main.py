@@ -21,7 +21,7 @@ UPDATE_CHNL = os.environ.get("UPDATE_CHNL","PythonBotz")
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME","metaui")
 SUPPORT_GRP = os.environ.get("SUPPORT_GRP","offchats")
 BOT_NAME = os.environ.get("BOT_NAME","Sana")
-START_IMG = os.environ.get("START_IMG","https://graph.org/file/414da8174a22a822ce196-74a42292054aec5998.jpg")
+START_IMG = os.environ.get("START_IMG","https://graph.org/file/f64481e04bc2796e6301b-eeab3dc973bdc78552.jpg")
 
 STKR = os.environ.get("STKR","CAACAgUAAxkBAAEBey1ohLqp-FVF7o1fWlAc5zKv9QABk1YAAncOAAJ5aZhVAAE7y_IGJV1XNgQ")  
 
