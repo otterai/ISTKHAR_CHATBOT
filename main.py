@@ -241,72 +241,94 @@ async def chatboton(client, message):
     & ~filters.private)
 async def chatbot(client, message):
     await message.reply_text(f"**ᴜsᴀɢᴇ:**\n/**chatbot [on/off]**\n**ᴄʜᴀᴛ-ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ(s) ᴡᴏʀᴋ ɪɴ ɢʀᴏᴜᴘ ᴏɴʟʏ!**")
-
+    
 
 @Mukesh.on_message(
- (
-        filters.text
-        | filters.sticker
-    )
+    (filters.text | filters.sticker)
     & ~filters.private
     & ~filters.bot,
 )
 async def vickai(client: Client, message: Message):
 
-   chatdb = MongoClient(MONGO_URL)
-   chatai = chatdb["Word"]["WordDb"]   
+    chatdb = MongoClient(MONGO_URL)
+    chatai = chatdb["Word"]["WordDb"]
 
-   if not message.reply_to_message:
-       vickdb = MongoClient(MONGO_URL)
-       vick = vickdb["VickDb"]["Vick"] 
-       is_vick = vick.find_one({"chat_id": message.chat.id})
-       if not is_vick:
-           await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
-           K = []  
-           is_chat = chatai.find({"word": message.text})  
-           k = chatai.find_one({"word": message.text})      
-           if k:               
-               for x in is_chat:
-                   K.append(x['text'])          
-               hey = random.choice(K)
-               is_text = chatai.find_one({"text": hey})
-               Yo = is_text['check']
-               if Yo == "sticker":
-                   await message.reply_sticker(f"{hey}")
-               if not Yo == "sticker":
-                   await message.reply_text(f"{hey}")
+    # Case 1: Message is NOT a reply
+    if not message.reply_to_message:
+        vickdb = MongoClient(MONGO_URL)
+        vick = vickdb["VickDb"]["Vick"]
+        is_vick = vick.find_one({"chat_id": message.chat.id})
+        if not is_vick:
+            await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
+            K = []
+            is_chat = chatai.find({"word": message.text})
+            k = chatai.find_one({"word": message.text})
+            if k:
+                for x in is_chat:
+                    K.append(x['text'])
+                hey = random.choice(K)
+                is_text = chatai.find_one({"text": hey})
+                Yo = is_text['check']
+                if Yo == "sticker":
+                    await message.reply_sticker(hey)
+                else:
+                    await message.reply_text(hey)
 
-   if message.reply_to_message:  
-       vickdb = MongoClient(MONGO_URL)
-       vick = vickdb["VickDb"]["Vick"] 
-       is_vick = vick.find_one({"chat_id": message.chat.id})    
-       getme = await Mukesh.get_me()
-       bot_id = getme.id                             
-       if message.reply_to_message.from_user.id == bot_id: 
-           if not is_vick:                   
-               await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
-               K = []  
-               is_chat = chatai.find({"word": message.text})
-               k = chatai.find_one({"word": message.text})      
-               if k:       
-                   for x in is_chat:
-                       K.append(x['text'])
-                   hey = random.choice(K)
-                   is_text = chatai.find_one({"text": hey})
-                   Yo = is_text['check']
-                   if Yo == "sticker":
-                       await message.reply_sticker(f"{hey}")
-                   if not Yo == "sticker":
-                       await message.reply_text(f"{hey}")
-       if not message.reply_to_message.from_user.id == bot_id:          
-           if message.sticker:
-               is_chat = chatai.find_one({"word": message.reply_to_message.text, "id": message.sticker.file_unique_id})
-               if not is_chat:
-                   chatai.insert_one({"word": message.reply_to_message.text, "text": message.sticker.file_id, "check": "sticker", "id": message.sticker.file_unique_id})
-           if message.text:                 
-               is_chat = chatai.find_one({"word": message.reply_to_message.text, "text": message.text})                 
-               if not is_chat:
-                   chatai.insert_one({"word": message.reply_to_message.text, "text": message.text, "check": "none"})    
+    # Case 2: Message IS a reply
+    elif message.reply_to_message and message.reply_to_message.from_user:
+        vickdb = MongoClient(MONGO_URL)
+        vick = vickdb["VickDb"]["Vick"]
+        is_vick = vick.find_one({"chat_id": message.chat.id})
+        getme = await Mukesh.get_me()
+        bot_id = getme.id
+
+        reply_from_id = message.reply_to_message.from_user.id
+
+        # Case 2a: Replied to bot
+        if reply_from_id == bot_id:
+            if not is_vick:
+                await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
+                K = []
+                is_chat = chatai.find({"word": message.text})
+                k = chatai.find_one({"word": message.text})
+                if k:
+                    for x in is_chat:
+                        K.append(x['text'])
+                    hey = random.choice(K)
+                    is_text = chatai.find_one({"text": hey})
+                    Yo = is_text['check']
+                    if Yo == "sticker":
+                        await message.reply_sticker(hey)
+                    else:
+                        await message.reply_text(hey)
+
+        # Case 2b: Replied to a user (not bot)
+        else:
+            if message.sticker:
+                if message.reply_to_message.text:  # Safe check
+                    is_chat = chatai.find_one({
+                        "word": message.reply_to_message.text,
+                        "id": message.sticker.file_unique_id
+                    })
+                    if not is_chat:
+                        chatai.insert_one({
+                            "word": message.reply_to_message.text,
+                            "text": message.sticker.file_id,
+                            "check": "sticker",
+                            "id": message.sticker.file_unique_id
+                        })
+
+            if message.text and message.reply_to_message.text:
+                is_chat = chatai.find_one({
+                    "word": message.reply_to_message.text,
+                    "text": message.text
+                })
+                if not is_chat:
+                    chatai.insert_one({
+                        "word": message.reply_to_message.text,
+                        "text": message.text,
+                        "check": "none"
+                    })
 
 
 @Mukesh.on_message(
@@ -385,39 +407,55 @@ async def vickstickerai(client: Client, message: Message):
     & ~filters.bot,
 )
 async def vickprivate(client: Client, message: Message):
+    chatdb = MongoClient(MONGO_URL)
+    chatai = chatdb["Word"]["WordDb"]
 
-   chatdb = MongoClient(MONGO_URL)
-   chatai = chatdb["Word"]["WordDb"]
-   if not message.reply_to_message: 
-       await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
-       K = []  
-       is_chat = chatai.find({"word": message.text})                 
-       for x in is_chat:
-           K.append(x['text'])
-       hey = random.choice(K)
-       is_text = chatai.find_one({"text": hey})
-       Yo = is_text['check']
-       if Yo == "sticker":
-           await message.reply_sticker(f"{hey}")
-       if not Yo == "sticker":
-           await message.reply_text(f"{hey}")
-   if message.reply_to_message:            
-       getme = await Mukesh.get_me()
-       bot_id = getme.id       
-       if message.reply_to_message.from_user.id == bot_id:                    
-           await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
-           K = []  
-           is_chat = chatai.find({"word": message.text})                 
-           for x in is_chat:
-               K.append(x['text'])
-           hey = random.choice(K)
-           is_text = chatai.find_one({"text": hey})
-           Yo = is_text['check']
-           if Yo == "sticker":
-               await message.reply_sticker(f"{hey}")
-           if not Yo == "sticker":
-               await message.reply_text(f"{hey}")
+    # If user did NOT reply to a message
+    if not message.reply_to_message:
+        await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
+        K = []
 
+        is_chat = chatai.find({"word": message.text})
+        for x in is_chat:
+            K.append(x['text'])
+
+        if not K:
+            await message.reply_text("😕 Mujhe is message ka jawab nahi mila.")
+            return
+
+        hey = random.choice(K)
+        is_text = chatai.find_one({"text": hey})
+
+        if is_text and is_text.get('check') == "sticker":
+            await message.reply_sticker(hey)
+        else:
+            await message.reply_text(hey)
+
+    # If user replied to a message
+    else:
+        if message.reply_to_message and message.reply_to_message.from_user:
+            getme = await Mukesh.get_me()
+            bot_id = getme.id
+
+            if message.reply_to_message.from_user.id == bot_id:
+                await Mukesh.send_chat_action(message.chat.id, ChatAction.TYPING)
+                K = []
+
+                is_chat = chatai.find({"word": message.text})
+                for x in is_chat:
+                    K.append(x['text'])
+
+                if not K:
+                    await message.reply_text("😕 Mujhe is reply ka jawab nahi mila.")
+                    return
+
+                hey = random.choice(K)
+                is_text = chatai.find_one({"text": hey})
+
+                if is_text and is_text.get('check') == "sticker":
+                    await message.reply_sticker(hey)
+                else:
+                    await message.reply_text(hey)
 
 @Mukesh.on_message(
  (
