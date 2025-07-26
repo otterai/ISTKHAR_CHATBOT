@@ -11,16 +11,16 @@ import asyncio
 import time
 from datetime import datetime
 from pyrogram import enums
-API_ID = os.environ.get("API_ID", None) 
-API_HASH = os.environ.get("API_HASH", None) 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", None) 
-MONGO_URL = os.environ.get("MONGO_URL", None)
-BOT_USERNAME = os.environ.get("BOT_USERNAME","") 
+API_ID = os.environ.get("API_ID", "24371796") 
+API_HASH = os.environ.get("API_HASH", "8121c78f4b8b31e88cc2623d1277338d") 
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "7529773336:AAGnZ6wGMncDeAzQLkyNyT4gcC_Zq0L31VI") 
+MONGO_URL = os.environ.get("MONGO_URL", "mongodb+srv://SHASHANK:STRANGER@shashank.uj7lold.mongodb.net/?retryWrites=true&w=majority")
+BOT_USERNAME = os.environ.get("BOT_USERNAME","QjiiBot") 
 UPDATE_CHNL = os.environ.get("UPDATE_CHNL","PythonBotz")
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME","metaui")
 SUPPORT_GRP = os.environ.get("SUPPORT_GRP","offchats")
 BOT_NAME = os.environ.get("BOT_NAME","Sana")
-START_IMG = os.environ.get("START_IMG","")
+START_IMG = os.environ.get("START_IMG","https://graph.org/file/414da8174a22a822ce196-74a42292054aec5998.jpg")
 
 STKR = os.environ.get("STKR","")  
 
