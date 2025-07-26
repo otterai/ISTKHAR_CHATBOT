@@ -22,7 +22,7 @@ SUPPORT_GRP = os.environ.get("SUPPORT_GRP","offchats")
 BOT_NAME = os.environ.get("BOT_NAME","Sana")
 START_IMG = os.environ.get("START_IMG","https://graph.org/file/414da8174a22a822ce196-74a42292054aec5998.jpg")
 
-STKR = os.environ.get("STKR","")  
+STKR = os.environ.get("STKR","CAACAgUAAxkBAAEBey1ohLqp-FVF7o1fWlAc5zKv9QABk1YAAncOAAJ5aZhVAAE7y_IGJV1XNgQ")  
 
 
 StartTime = time.time()
